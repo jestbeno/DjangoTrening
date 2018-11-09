@@ -1,0 +1,3 @@
+function deleteCalendarEntry(entry){
+
+}

@@ -1,0 +1,42 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <h1>Koledar</h1>
+            {%if request.user.is_authenticated%}
+            <span>Pozdravljen, {{request.user.username}}</span>
+            <a href="/logout">Odjava</a>
+            {%endif%}
+        </div>
+        <div class="col-lg-8">
+            <button onclick="window.location='{%url 'add' %}'" type="button" class="btn btn-success">Dodaj vnos</button>
+            </br>
+        </div>
+    </div>
+    <div class="row">
+        {% for entry in entries %}
+        <div class="calendar_entry col-lg-4">
+            </br>
+            <h2>{{ entry.name }}</h2>
+            <h4>{{ entry.date|date:"j. b. o" }}</h4>
+            <p>
+                {{ entry.description|truncatechars:50 }}
+            </p>
+            <a href="{% url 'details' pk=entry.id %}">
+                <button type="button" class="btn btn-success">
+                    <i class="glyphicon glyphicon-trash"></i> Detajl
+                </button>
+            </a>
+            <a href="{% url 'delete' pk=entry.id %}">
+                <button type="button" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-trash"></i> Izbriši
+                </button>
+            </a>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
+{% endblock %}
